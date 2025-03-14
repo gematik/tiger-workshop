@@ -1,0 +1,69 @@
+tigerProxy:
+  skipTrafficEndpointsSubscription: false
+
+servers:
+  zionServer:
+    type: zion
+    zionConfiguration:
+      serverPort: 8090
+      mockResponses:
+        helloWorld:
+          requestCriterions:
+            - message.method == 'GET'
+            - message.path == '/helloWorld'
+          response:
+            statusCode: 200
+            body: 'hello world'
+        healthCheck:
+          request:
+            method: "GET"
+            path: "/healthcheck"
+          response:
+            statusCode: 200
+            body: 'healthcheck is okay'
+        passwordCheck:
+          requestCriterions:
+            - message.method == 'POST'
+            - message.path == '/checkPassword'
+          nestedResponses:
+            correctPassword:
+              importance: 20
+              requestCriterions:
+                - $.body == 'secret'
+              response:
+                statusCode: 200
+                body: 'login correct'
+            wrongPassword:
+              importance: 5
+              response:
+                statusCode: 400
+                body: 'login incorrect'
+
+otherExampleServer:
+  type: zion
+  zionConfiguration:
+    serverPort: ${free.port.1}
+    mockResponses:
+      getUpdateFlag:
+        requestCriterions:
+            - message.method == 'POST'
+        nestedResponses:
+          regularResponse:
+            importance: 5
+            requestCriterions:
+              - message.path == '/abc/'
+            response:
+              statusCode: ${responseStatusCode|200}
+              headers:
+                Content-Type: "application/soap+xml; charset=utf-8"
+                Transfer-Encoding: ${transferEncoding|}
+                Connection: ${connectionFlag|}
+                Via: ${viaFlag|}
+                Retry-After: ${afterRetry|}
+              body: ${responseBody|}
+              encoding: ${contentEncoding|}
+              responseDelay: ${delayResponse|0}
+
+lib:
+  rbelPathDebugging: false
+  activateWorkflowUi: true
