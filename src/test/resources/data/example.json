@@ -1,0 +1,56 @@
+{
+  "name": "John Doe",
+  "age": 30,
+  "address": {
+    "street": "123 Main St",
+    "city": "Berlin",
+    "postalCode": "10115"
+  },
+  "email": "john.doe@example.com",
+  "phoneNumbers": [
+    {
+      "type": "home",
+      "number": "030-1234567"
+    },
+    {
+      "type": "mobile",
+      "number": "0176-12345678"
+    }
+  ],
+  "preferences": {
+    "newsletter": true,
+    "notifications": {
+      "email": true,
+      "sms": false
+    }
+  },
+  "orders": [
+    {
+      "orderId": "A123",
+      "date": "2024-12-01",
+      "items": [
+        {
+          "productId": "P001",
+          "quantity": 2,
+          "price": 19.99
+        },
+        {
+          "productId": "P002",
+          "quantity": 1,
+          "price": 49.99
+        }
+      ]
+    },
+    {
+      "orderId": "B456",
+      "date": "2024-12-05",
+      "items": [
+        {
+          "productId": "P003",
+          "quantity": 3,
+          "price": 9.99
+        }
+      ]
+    }
+  ]
+}

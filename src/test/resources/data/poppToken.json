@@ -1,0 +1,6 @@
+{
+  "typ": "vnd.telematik.popp+jwt",
+  "alg": "ES256",
+  "kid": "x_vW4LVDipvhjkhju8iUQ5alKsZLWtH6jh4eJ4c5offXtMV0",
+  "x5c": ["MIICqDChjkhCAk+gAwIBAgIDAU"]
+}

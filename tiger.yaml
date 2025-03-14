@@ -1,0 +1,50 @@
+tigerProxy:
+  skipTrafficEndpointsSubscription: false
+
+servers:
+  zionServer:
+    type: zion
+    zionConfiguration:
+      serverPort: 8090
+      mockResponses:
+        helloWorld:
+          requestCriterions:
+            - message.method == 'GET'
+            - message.path == '/helloWorld'
+          response:
+            statusCode: 200
+            body: 'hello world'
+        healthCheck:
+          request:
+            method: "GET"
+            path: "/healthcheck"
+          response:
+            statusCode: 200
+            body: 'healthcheck is okay'
+        passwordCheck:
+          requestCriterions:
+            - message.method == 'POST'
+            - message.path == '/checkPassword'
+          nestedResponses:
+            correctPassword:
+              importance: 20
+              requestCriterions:
+                - $.body == 'secret'
+              response:
+                statusCode: 200
+                body: 'login correct'
+            wrongPassword:
+              importance: 5
+              response:
+                statusCode: 400
+                body: 'login incorrect'
+        rbelbuilder:
+          requestCriterions:
+            - message.method == 'GET'
+            - message.path == '/rbelbuilder'
+          response:
+            statusCode: 200
+            body: ${responseBody|}
+lib:
+  rbelPathDebugging: false
+  activateWorkflowUi: true
