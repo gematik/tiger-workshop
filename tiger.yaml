@@ -1,0 +1,20 @@
+tigerProxy:
+  skipTrafficEndpointsSubscription: false
+
+servers:
+  demo:
+    type: externalJar
+    source:
+      - local:src/demo-0.0.1-SNAPSHOT.jar
+    healthcheckUrl: http://localhost:${free.port.0}/service/status
+    externalJarOptions:
+      arguments:
+        - --server.port=${free.port.0}
+lib:
+  rbelPathDebugging: false
+  activateWorkflowUi: false
+
+additionalConfigurationFiles:
+  -
+    filename: demoData.yaml
+    baseKey: demo
