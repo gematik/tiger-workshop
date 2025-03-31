@@ -11,4 +11,4 @@ servers:
       arguments:
         - --server.port=${free.port.0}
 lib:
-  activateWorkflowUi: false
+  activateWorkflowUi: true
