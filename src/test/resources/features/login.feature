@@ -14,10 +14,10 @@ Feature: Tiger - Workshop - Login
     Given TGR send PUT request to "http://demo/service/deleteUser" with:
       | username  |
       | ${demo.user.name}   |
-    And TGR find request to path "/service/deleteUser"
+    And TGR find first request to path "/service/deleteUser"
     Then TGR current response with attribute "$.responseCode" matches "200"
     When I try to log in as "${demo.user.name}" with password "${demo.user.password}"
-    And TGR find request to path "/service/performLogin"
+    And TGR find first request to path "/service/performLogin"
     Then TGR current response with attribute "$.body.status" matches "400"
     And TGR current response with attribute "$.body.error" matches "Bad Request"
 
