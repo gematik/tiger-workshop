@@ -47,4 +47,4 @@ servers:
             body: ${responseBody|}
 lib:
   rbelPathDebugging: false
-  activateWorkflowUi: true
+  activateWorkflowUi: false
