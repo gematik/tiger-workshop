@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.gematik.tiger.workshop</groupId>
@@ -12,19 +12,21 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <tiger.version>3.7.1</tiger.version>
         <serenity.version>4.2.16</serenity.version>
-        <version.logback>1.5.17</version.logback>
+        <tiger.version>4.0.7</tiger.version>
     </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${version.logback}</version>
+                <groupId>de.gematik.test</groupId>
+                <artifactId>tiger-bom</artifactId>
+                <version>${tiger.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>de.gematik.test</groupId>
@@ -45,4 +47,63 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>de.gematik.test</groupId>
+                <artifactId>tiger-maven-plugin</artifactId>
+                <version>${tiger.version}</version>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <glues>
+                                <glue>de.gematik.test.tiger.glue</glue>
+                                <glue>de.gematik.test.tiger.workshop</glue>
+                                <glue>net.serenitybdd.cucumber.actors</glue>
+                            </glues>
+                        </configuration>
+                        <phase>generate-test-sources</phase>
+                        <id>prepare-and-verify-tiger-tests-and-results</id>
+                        <goals>
+                            <goal>generate-drivers</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>generate-serenity-reports</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.5.2</version>
+                <configuration>
+                    <!--
+                        WorkflowUI needs this to allow it to block execution of maven,
+                        else maven will try to kill and destroy the tiger spring boot apps
+                     -->
+                    <forkedProcessExitTimeoutInSeconds>18000</forkedProcessExitTimeoutInSeconds>
+                    <argLine>
+                        ${argLine}
+                    </argLine>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>org.sonar.java.jacoco.JUnitListener</value>
+                        </property>
+                    </properties>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -11,4 +11,7 @@ servers:
       arguments:
         - --server.port=${free.port.0}
 lib:
-  activateWorkflowUi: true
+  activateWorkflowUi: false
+  trafficVisualization: true
+  #enableTestSelection: true
+  #runTestsOnStart: true
