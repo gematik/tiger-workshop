@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+    <option name="GLUE" value="de.gematik.test.tiger.workshop de.gematik.test.tiger.glue net.serenitybdd.cucumber.actors" />
+    <option name="MAIN_CLASS_NAME" value="io.cucumber.junit.TigerCucumberRunner" />
+    <module name="tiger-workshop" />
+    <option name="PROGRAM_PARAMETERS" value="--plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
+    <shortenClasspath name="ARGS_FILE" />
+    <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
