@@ -13,7 +13,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <serenity.version>4.2.16</serenity.version>
-        <tiger.version>4.0.7</tiger.version>
+        <tiger.version>4.1.0</tiger.version>
     </properties>
     <dependencyManagement>
         <dependencies>
