@@ -13,7 +13,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <serenity.version>4.2.16</serenity.version>
-        <tiger.version>4.0.8</tiger.version>
+        <tiger.version>4.1.0</tiger.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -31,7 +31,6 @@
         <dependency>
             <groupId>de.gematik.test</groupId>
             <artifactId>tiger-test-lib</artifactId>
-            <version>${tiger.version}</version>
         </dependency>
         <dependency>
             <groupId>net.serenity-bdd</groupId>
@@ -52,7 +51,6 @@
             <plugin>
                 <groupId>de.gematik.test</groupId>
                 <artifactId>tiger-maven-plugin</artifactId>
-                <version>${tiger.version}</version>
                 <executions>
                     <execution>
                         <configuration>
