@@ -1,5 +1,3 @@
-tigerProxy:
-  skipTrafficEndpointsSubscription: false
 
 servers:
   demo:
