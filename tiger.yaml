@@ -1,0 +1,162 @@
+tigerProxy:
+  proxyLogLevel: TRACE
+  tls:
+    clientSslSuites:
+      - "..."
+    clientSupportedGroups:
+      - "..."
+    forwardMutualTlsIdentity: "..."
+  trafficEndpoints:
+    - http://localhost:${free.port.2}
+    - http://localhost:${free.port.4}
+    - http://localhost:${free.port.6}
+
+
+servers:
+  serverUnderTest:
+    type: externalUrl
+    source:
+      - https://.....
+    healthcheckUrl: https://...
+
+  fachdienstSimulator_UFS:
+    type: zion
+    zionConfiguration:
+      serverPort: ${free.port.1}
+      mockResponses:
+        getupdateflag:
+          requestCriterions:
+            - message.method == 'POST'
+          nestedResponses:
+            regularResponse:
+              importance: 5
+              requestCriterions:
+                - message.path == '/ufs/'
+              response:
+                statusCode: ${responseStatusCode|200}
+                headers:
+                  Content-Type: "application/soap+xml; charset=utf-8"
+                  Transfer-Encoding: ${transferEncoding|}
+                  Connection: ${connectionFlag|}
+                  Via: ${viaFlag|}
+                  Retry-After: ${afterRetry|}
+                body: ${responseBody|}
+                encoding: ${contentEncoding|}
+                responseDelay: ${delayResponse|0}
+            regularResponseAlt:
+              importance: 5
+              requestCriterions:
+                - message.path == '/ufsAlternative/'
+              response:
+                statusCode: ${responseStatusCode|200}
+                headers:
+                  Content-Type: "application/soap+xml; charset=utf-8"
+                body: ${responseBody|}
+
+  #remoteTigerProxy
+  ufsTigerProxy:
+    type: tigerProxy
+    startupTimeoutSec: 60
+    proxyLogLevel: DEBUG
+    activateTrafficLogging: true
+    tigerProxyConfiguration:
+      adminPort: ${free.port.2}
+      proxyPort: 8081
+      rewriteHostHeader: true
+      proxyRoutes:
+        - disableRbelLogging: false
+          from: /
+          to: http://localhost:${free.port.1}
+      tls:
+        serverSslSuites:
+          - "..."
+        serverIdentity: "..."
+
+
+  fachdienstSimulator_CMS:
+    type: zion
+    zionConfiguration:
+      serverPort: ${free.port.3}
+      mockResponses:
+        getupdateflag:
+          requestCriterions:
+            - message.method == 'POST'
+            - message.path == '/cms/'
+          nestedResponses:
+            regularResponse:
+              importance: 5
+              response:
+                statusCode: ${responseStatusCode|200}
+                headers:
+                  Content-Type: "application/soap+xml; charset=utf-8"
+                body: ${responseBody|}
+
+  cmsTigerProxy:
+    type: tigerProxy
+    startupTimeoutSec: 60
+    proxyLogLevel: DEBUG
+    activateTrafficLogging: true
+    tigerProxyConfiguration:
+      adminPort: ${free.port.4}
+      proxyPort: 8082
+      rewriteHostHeader: true
+      proxyRoutes:
+        - disableRbelLogging: false
+          from: /
+          to: http://localhost:${free.port.3}
+      tls:
+        serverSslSuites:
+          - "..."
+        serverIdentity: "..."
+
+  fachdienstSimulator_VSD:
+    type: zion
+    zionConfiguration:
+      serverPort: ${free.port.5}
+      mockResponses:
+        getupdateflag:
+          requestCriterions:
+            - message.method == 'POST'
+          nestedResponses:
+            regularResponse:
+              importance: 5
+              requestCriterions:
+                - message.path == '/vsd/'
+              response:
+                statusCode: ${responseStatusCode|200}
+                headers:
+                  Content-Type: "application/soap+xml; charset=utf-8"
+                body: ${responseBody|}
+            regularResponseAlt:
+              importance: 5
+              requestCriterions:
+                - message.path == '/vsdAlternative/'
+              response:
+                statusCode: ${responseStatusCode|200}
+                headers:
+                  Content-Type: "application/soap+xml; charset=utf-8"
+                body: ${responseBody|}
+
+  vsdTigerProxy:
+    type: tigerProxy
+    startupTimeoutSec: 60
+    proxyLogLevel: DEBUG
+    activateTrafficLogging: true
+    tigerProxyConfiguration:
+      adminPort: ${free.port.6}
+      proxyPort: 8083
+      rewriteHostHeader: true
+      proxyRoutes:
+        - disableRbelLogging: false
+          from: /
+          to: http://localhost:${free.port.5}
+      tls:
+        serverSslSuites:
+          - "..."
+          - "..."
+        serverIdentity: "..."
+
+logging:
+  level:
+    # activate tracing for a specific class
+    de.gematik.test.tiger.mockserver: OFF
