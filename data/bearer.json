@@ -1,0 +1,16 @@
+{
+  "tgrEncodeAs": "BEARER_TOKEN",
+  "BearerToken": {
+    "tgrEncodeAs": "JWT",
+    "header": {
+      "alg": "BP256R1",
+      "typ": "JWT"
+    },
+    "body": {
+      "claim": "value"
+    },
+    "signature": {
+      "verifiedUsing": "idp_enc"
+    }
+  }
+}
