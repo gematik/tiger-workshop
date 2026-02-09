@@ -1,0 +1,14 @@
+{
+  "tgrEncodeAs": "JWE",
+  "header": {
+    "alg": "ECDH-ES",
+    "enc": "A256GCM"
+  },
+  "body": {
+    "some_claim": "foobar",
+    "other_claim": "code"
+  },
+  "encryptionInfo": {
+    "decryptedUsingKeyWithId": "idp_enc"
+  }
+}

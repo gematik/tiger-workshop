@@ -1,5 +1,7 @@
 tigerProxy:
   skipTrafficEndpointsSubscription: false
+  keyFolders:
+    - .
 
 servers:
   zionServer:
@@ -31,7 +33,7 @@ servers:
               requestCriterions:
                 - $.body == 'secret'
               response:
-                statusCode: 200
+                statusCode: ${responseStatusCode}
                 body: 'login correct'
             wrongPassword:
               importance: 5
@@ -39,31 +41,55 @@ servers:
                 statusCode: 400
                 body: 'login incorrect'
 
-otherExampleServer:
-  type: zion
-  zionConfiguration:
-    serverPort: ${free.port.1}
-    mockResponses:
-      getUpdateFlag:
-        requestCriterions:
-            - message.method == 'POST'
-        nestedResponses:
-          regularResponse:
-            importance: 5
-            requestCriterions:
-              - message.path == '/abc/'
+  otherZionServer:
+    type: zion
+    zionConfiguration:
+      serverPort: ${free.port.1}
+      mockResponses:
+          users:
+            request:
+              path: "/users/{userId}"
+              method: "GET"
+              additionalCriterions:
+                - "'${userId}' == '123'"
             response:
-              statusCode: ${responseStatusCode|200}
-              headers:
-                Content-Type: "application/soap+xml; charset=utf-8"
-                Transfer-Encoding: ${transferEncoding|}
-                Connection: ${connectionFlag|}
-                Via: ${viaFlag|}
-                Retry-After: ${afterRetry|}
-              body: ${responseBody|}
-              encoding: ${contentEncoding|}
-              responseDelay: ${delayResponse|0}
+              statusCode: 200
+              body: "{'id':'${userId}', 'username': 'Tiger'}"
+
+  anotherZionServer:
+    type: zion
+    zionConfiguration:
+      serverPort: ${free.port.2}
+      mockResponses:
+        someGetEndpoint:
+          requestCriterions:
+            - message.method == 'GET'
+            - message.path == '/abc'
+          nestedResponses:
+            regularResponse:
+              response:
+                statusCode: ${responseStatusCode|200}
+                body: ${responseBody|}
+        somePostEndpoint:
+          requestCriterions:
+            - message.method == 'POST'
+            - message.path == '/efg'
+          nestedResponses:
+            regularResponse:
+              response:
+                statusCode: ${responseStatusCode|200}
+                headers:
+                  Content-Type: ${contentType|}
+                  Transfer-Encoding: ${transferEncoding|}
+                  Connection: ${connectionFlag|}
+                  Retry-After: ${afterRetry|}
+                body: ${responseBody|}
+                encoding: ${contentEncoding|}
+                responseDelay: ${delayResponse|0}
 
 lib:
   rbelPathDebugging: false
   activateWorkflowUi: true
+  httpClientConfig:
+    activateRbelWriter: true
+  

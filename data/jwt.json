@@ -1,0 +1,19 @@
+{
+  "myToken": {
+    "tgrEncodeAs": "JWT",
+    "header": {
+      "alg": "BP256R1",
+      "typ": "JWT"
+    },
+    "body": {
+      "name": "Max Power",
+      "iat": {
+        "tgrAttributes": ["jsonNonStringPrimitive"],
+        "value": "!{currentTimestamp()}"
+      }
+    },
+    "signature": {
+      "verifiedUsing": "idp_enc"
+    }
+  }
+}

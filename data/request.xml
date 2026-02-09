@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s11:Envelope xmlns:s11="http://schemas.xmlsoap.org/soap/envelope/">
+    <s11:Header>
+        <TNS:ServiceLocalization xmlns:TNS="http://ws.gematik.de/cm/common/CmCommon/v2.0">
+            <TNS:Type>UFS</TNS:Type>
+            <TNS:Provider>123456789</TNS:Provider>
+        </TNS:ServiceLocalization>
+    </s11:Header>
+    <s11:Body>
+        <TNS:GetUpdateFlag xmlns:TNS="http://ws.gematik.de/cm/uf/CmUfServiceRequest/v2.0">
+            <TNS:Iccsn xmlns:TNS="http://ws.gematik.de/cm/common/CmCommon/v2.0">80276000000000000000</TNS:Iccsn>
+        </TNS:GetUpdateFlag>
+    </s11:Body>
+</s11:Envelope>
