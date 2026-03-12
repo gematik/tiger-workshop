@@ -9,6 +9,7 @@ Feature: Tiger - Workshop
     Then TGR current response with attribute "$.body" matches "login incorrect"
 
   Scenario: Login should succeed
+    Given TGR set global variable "responseStatusCode" to "200"
     Given TGR send POST request to "http://localhost:8090/checkPassword" with body "secret"
     And TGR find last request to path "/checkPassword"
     Then TGR current response with attribute "$.responseCode" matches "200"
