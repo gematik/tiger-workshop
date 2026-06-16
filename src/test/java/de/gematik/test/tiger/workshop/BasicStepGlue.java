@@ -37,7 +37,7 @@ public class BasicStepGlue {
         SerenityRest.given()
             .queryParam("username", username)
             .queryParam("password", password)
-            .get("http://demo/service/performLogin");
+            .post("http://demo/service/login");
     }
 
     @Then("I register as user {tigerResolvedString} with password {tigerResolvedString}")
@@ -45,6 +45,6 @@ public class BasicStepGlue {
         SerenityRest.given()
             .queryParam("username", username)
             .queryParam("password", password)
-            .get("http://demo/service/performRegistration");
+            .get("http://demo/service/register");
     }
 }
