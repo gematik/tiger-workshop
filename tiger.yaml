@@ -3,7 +3,7 @@ servers:
   demo:
     type: externalJar
     source:
-      - local:src/demo-0.0.1-SNAPSHOT.jar
+      - local:src/demo-1.0.0.jar
     healthcheckUrl: http://localhost:${free.port.0}/service/status
     # OPTIONAL
     healthcheckReturnCode: 200
