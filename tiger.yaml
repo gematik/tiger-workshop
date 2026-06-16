@@ -1,6 +1,7 @@
 lib:
   rbelPathDebugging: false
-  activateWorkflowUi: false
+  activateWorkflowUi: true
+  #runTestsOnStart: false
 
 additionalConfigurationFiles:
   - filename: defaults.yaml
