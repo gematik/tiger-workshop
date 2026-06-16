@@ -37,6 +37,6 @@ public class BasicStepGlue {
         SerenityRest.given()
             .queryParam("username", username)
             .queryParam("password", password)
-            .get("http://demo/service/performLogin");
+            .post("http://demo/service/login");
     }
 }
