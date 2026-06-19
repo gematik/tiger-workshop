@@ -1,0 +1,7 @@
+user:
+  tom:
+    name: myVeryCoolUserName
+    password: "Secret_password"
+  tim:
+    name: tim
+    password: "12345"
