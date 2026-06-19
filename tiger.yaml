@@ -1,0 +1,17 @@
+servers:
+  demo:
+    type: externalJar
+    source:
+      - local:src/demo-1.0.0.jar
+    healthcheckUrl: http://localhost:${free.port.0}/service/status
+    externalJarOptions:
+      arguments:
+        - --server.port=${free.port.0}
+lib:
+  rbelPathDebugging: false
+  activateWorkflowUi: true
+
+additionalConfigurationFiles:
+  -
+    filename: demoData.yaml
+    baseKey: demo
